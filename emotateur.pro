@@ -401,6 +401,15 @@ DISTFILES += \
     data/haarcascade_mcs_lefteye.xml \
     data/haarcascade_frontalface_alt2.xml
 
+##MACOS
+#INCLUDEPATH += /usr/local/include
+#LIBS += -L/usr/local/lib \
+# -lopencv_core \
+# -lopencv_highgui \
+# -lopencv_imgproc \
+# -lopencv_features2d \
+# -lopencv_calib3d\
+# -lopencv_objdetect
 
 INCLUDEPATH +=$$(OPENCV_DIR)\include
 

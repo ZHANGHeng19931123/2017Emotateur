@@ -52,12 +52,18 @@ double ExpressionRecogniser::getSimilarity(cv::Mat_<unsigned char> img1, cv::Mat
 void ExpressionRecogniser::getAbcd(int posCoor1, int posCoor2)
 {
     // M
-    double m[2][2] = {{img2Points.at(posCoor1).getX(), img2Points.at(posCoor1).getY()}, {img2Points.at(posCoor2).getX(), img2Points.at(posCoor2).getY()}};
+    double m1 = double(img2Points.at(posCoor1).getX());
+    double m2 = double(img2Points.at(posCoor1).getY());
+    double m3 = double(img2Points.at(posCoor2).getX());
+    double m4 = double(img2Points.at(posCoor2).getY());
+    double m[2][2] = {{m1, m2}, {m3, m4}};
     cv::Mat M = cv::Mat(2, 2, CV_64F, m);
     cv::invert(M,M);
 
     // Y1
-    double y1[2][1] = {{img1Points.at(posCoor1).getX()},{img1Points.at(posCoor2).getX()}};
+    double y11 = double(img1Points.at(posCoor1).getX());
+    double y12 = double(img1Points.at(posCoor2).getX());
+    double y1[2][1] = {{y11},{y12}};
     cv::Mat Y1(2,1,CV_64F,y1);
 
     // a and b
@@ -67,7 +73,9 @@ void ExpressionRecogniser::getAbcd(int posCoor1, int posCoor2)
     b = ab.at<double>(1,0);
 
     // Y2
-    double y2[2][1] = {{img1Points.at(posCoor1).getY()},{img1Points.at(posCoor2).getY()}};
+    double y21 = double(img1Points.at(posCoor1).getY());
+    double y22 = double(img1Points.at(posCoor2).getY());
+    double y2[2][1] = {{y21},{y22}};
     cv::Mat Y2(2,1,CV_64F,y2);
 
     // c and d
@@ -107,7 +115,7 @@ double ExpressionRecogniser::getSimilarity(cv::Mat_<unsigned char> img2)
             // load img2 and img1 part points
             img1PartPoints.push_back(img2Points.at(mouthCompareOrder[i]).afterChange(a,b,c,d));
             img2PartPoints.push_back(img2Points.at(mouthCompareOrder[i]));
-         }
+        }
 
         // compare rightEye
         getAbcd(rightEyeComparePosCoor1, rightEyeComparePosCoor2);
