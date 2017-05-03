@@ -77,7 +77,6 @@ CMakeLists.txt.user*
 *.o
 *.pro.user
 *.xml
-*.qrc
 _*
 
 # End of https://www.gitignore.io/api/qt,c++,opencv

@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/interface">
+        <file>imagesInterface/images.jpeg</file>
+        <file>imagesInterface/old.0.jpg</file>
+        <file>imagesInterface/background.png</file>
+        <file>imagesInterface/tse.png</file>
+    </qresource>
+    <qresource prefix="/imagesMaterial">
+        <file>imagesBase/ImageEmotion1.jpg</file>
+        <file>imagesBase/ImageEmotion2.jpg</file>
+        <file>imagesBase/ImageEmotion3.jpg</file>
+        <file>imagesBase/ImageEmotion4.jpg</file>
+        <file>imagesBase/ImageEmotion5.jpg</file>
+        <file>imagesBase/ImageEmotion8.jpg</file>
+        <file>imagesBase/ImageEmotion6.jpg</file>
+        <file>imagesBase/ImageEmotion7.jpg</file>
+        <file>imagesBase/ImageEmotion9.jpg</file>
+    </qresource>
+</RCC>
