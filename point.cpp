@@ -28,6 +28,11 @@ double EmoPoint::getDistance(EmoPoint p)
     return sqrt(temp1*temp1 + temp2*temp2);
 }
 
+double EmoPoint::getDistanceY(EmoPoint p)
+{
+    return double(fabsf(this->y - p.y));
+}
+
 EmoPoint EmoPoint::getCenter(EmoPoint p)
 {
     return EmoPoint((this->getX()+p.getX())/2, (this->getY()+p.getY())/2);

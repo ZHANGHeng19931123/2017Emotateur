@@ -3,7 +3,7 @@
 Model::Model(ExpressionRecogniser *expressionRecogniser) : expressionRecogniser(expressionRecogniser)
 {
     imageNum = 1;
-    difficulity = 90;
+    difficulity = 99;
     loadNextImage();
     score = 0;
 }

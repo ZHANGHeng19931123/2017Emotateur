@@ -3,6 +3,8 @@
 
 #include <math.h>
 
+using namespace std;
+
 class EmoPoint
 {
 public:
@@ -11,6 +13,7 @@ public:
     int getX();
     int getY();
     double getDistance(EmoPoint p);
+    double getDistanceY(EmoPoint p);
     EmoPoint afterChange(float a, float b, float c, float d);
     EmoPoint getCenter(EmoPoint p);
     float getSlope(EmoPoint p);

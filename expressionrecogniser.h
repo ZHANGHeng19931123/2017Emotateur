@@ -7,7 +7,7 @@
 #include <iostream>
 #include <QImage>
 #include <QPixmap>
-
+#include <math.h>
 #include "opencv/highgui.h"
 #include "stasm/stasm_lib.h"
 
@@ -39,35 +39,45 @@ private:
 
     const int mouthComparePosCoor1 = 59;
     const int mouthComparePosCoor2 = 65;
-    const int mouthCompareOrder[10] = {62, 74};
-    const int mouthCompareNum = 10;
-    double mouthDistance;
+    const int mouthCompareOrder[2] = {62, 74};
+    const int mouthCompareNum = 2;
+//    double mouthDistance;
     const double mouthWeighting = 0.5;
-
-    const int rightEyeComparePosCoor1 = 40;
-    const int rightEyeComparePosCoor2 = 44;
-    const int rightEyeCompareOrder[6] = {42, 46};
-    const int rightEyeCompareNum = 6;
-    double rightEyeDistance;
-    const double rightEyeWeighting = 0.3;
-
-    const int eyebrowComparePosCoor1 = 18;
-    const int eyebrowComparePosCoor2 = 25;
-    const int eyebrowCompareOrder[6] = {21, 22};
-    const int eyebrowCompareNum = 6;
-    double eyebrowDistance;
-    const double eyeBrowWeighting = 0.2;
 
     const int leftEyeComparePosCoor1 = 30;
     const int leftEyeComparePosCoor2 = 34;
-    const int leftEyeCompareOrder[6] = {32, 36};
-    const int leftEyeCompareNum = 6;
-    double leftEyeDistance;
-    const double leftEyeWeighting = 0.3;
+    const int leftEyeCompareOrder[2] = {32, 36};
+    const int leftEyeCompareNum = 2;
+//    double leftEyeDistance;
+    const double leftEyeWeighting = 0.17;
+
+    const int rightEyeComparePosCoor1 = 40;
+    const int rightEyeComparePosCoor2 = 44;
+    const int rightEyeCompareOrder[2] = {42, 46};
+    const int rightEyeCompareNum = 2;
+//    double rightEyeDistance;
+    const double rightEyeWeighting = 0.17;
+
+    const int leftEyebrowComparePosCoor1 = 30;
+    const int leftEyebrowComparePosCoor2 = 34;
+    const int leftEyebrowCompareOrder[2] = {36, 17};
+    const int leftEyebrowCompareNum = 2;
+//    double LeftEyebrowDistance;
+    const double leftEyeBrowWeighting = 0.1;
+
+    const int rightEyebrowComparePosCoor1 = 40;
+    const int rightEyebrowComparePosCoor2 = 44;
+    const int rightEyebrowCompareOrder[2] = {48, 24};
+    const int rightEyebrowCompareNum = 2;
+//    double rightEyebrowDistance;
+    const double rightEyeBrowWeighting = 0.1;
 
     float a, b, c, d;
-    double distance;
+    double similarity;
+    double histo1[5] = {0,0,0,0,0};
+    double histo2[5] = {0,0,0,0,0};
     void getAbcd(int posCoor1, int posCoor2);
+    void distanceIntersection();
 };
 
 #endif // EXPRESSIONRECOGNISER_H

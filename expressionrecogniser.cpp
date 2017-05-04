@@ -77,6 +77,21 @@ void ExpressionRecogniser::getAbcd(int posCoor1, int posCoor2)
     d = cd.at<double>(1,0);
 }
 
+void ExpressionRecogniser::distanceIntersection()
+{
+    cout << "" << histo1[0] << " " << histo1[1] << " " << histo1[2] << " " << histo1[3] << " " << histo1[4] << endl;
+    cout << "" << histo2[0] << " " << histo2[1] << " " << histo2[2] << " " << histo2[3] << " " << histo2[4] << endl;
+    double temp0, temp1, temp2;
+    for (int i = 0; i < 5; i ++)
+    {
+        temp0 += std::min(histo1[i], histo2[i]);
+        temp1 += histo1[i];
+        temp2 += histo2[i];
+    }
+
+    similarity = temp0/std::min(temp1, temp2);
+}
+
 double ExpressionRecogniser::getSimilarity(cv::Mat_<unsigned char> img2)
 {
     img2Points = this->getFacePoints(img2);
@@ -87,90 +102,121 @@ double ExpressionRecogniser::getSimilarity(cv::Mat_<unsigned char> img2)
         // compare mouth
         getAbcd(mouthComparePosCoor1, mouthComparePosCoor2);
 
-        mouthDistance = 0;
+        //        mouthDistance = 0;
 
         // load img2 and img1 part points
-        img1PartPoints.clear();
-        img2PartPoints.clear();
+        //        img1PartPoints.clear();
+        //        img2PartPoints.clear();
 
         // load img2 and img1 part points
-        img1PartPoints.push_back(img2Points.at(mouthComparePosCoor1).afterChange(a,b,c,d));
-        img2PartPoints.push_back(img2Points.at(mouthComparePosCoor1));
-        img1PartPoints.push_back(img2Points.at(mouthComparePosCoor2).afterChange(a,b,c,d));
-        img2PartPoints.push_back(img2Points.at(mouthComparePosCoor2));
+        //        img1PartPoints.push_back(img2Points.at(mouthComparePosCoor1).afterChange(a,b,c,d));
+        //        img2PartPoints.push_back(img2Points.at(mouthComparePosCoor1));
+        //        img1PartPoints.push_back(img2Points.at(mouthComparePosCoor2).afterChange(a,b,c,d));
+        //        img2PartPoints.push_back(img2Points.at(mouthComparePosCoor2));
 
-        for(int i = 0; i < mouthCompareNum; i ++)
-        {
-            // calcul distance of mouth
-            mouthDistance += img1Points.at(mouthCompareOrder[i]).getDistance(img2Points.at(mouthCompareOrder[i]).afterChange(a,b,c,d));
+        histo1[0] = img1Points.at(mouthCompareOrder[0]).getDistanceY(img1Points.at(mouthCompareOrder[1]));
+        histo2[0] = img2Points.at(mouthCompareOrder[0]).getDistanceY(img2Points.at(mouthCompareOrder[1]));
 
-            // load img2 and img1 part points
-            img1PartPoints.push_back(img2Points.at(mouthCompareOrder[i]).afterChange(a,b,c,d));
-            img2PartPoints.push_back(img2Points.at(mouthCompareOrder[i]));
-         }
 
-        // compare rightEye
-        getAbcd(rightEyeComparePosCoor1, rightEyeComparePosCoor2);
-
-        // load img2 and img1 part points
-        img1PartPoints.push_back(img2Points.at(rightEyeComparePosCoor1).afterChange(a,b,c,d));
-        img2PartPoints.push_back(img2Points.at(rightEyeComparePosCoor1));
-        img1PartPoints.push_back(img2Points.at(rightEyeComparePosCoor2).afterChange(a,b,c,d));
-        img2PartPoints.push_back(img2Points.at(rightEyeComparePosCoor2));
-
-        rightEyeDistance = 0;
-        for(int i = 0; i < rightEyeCompareNum; i ++)
-        {
-            rightEyeDistance += img1Points.at(rightEyeCompareOrder[i]).getDistance(img2Points.at(rightEyeCompareOrder[i]).afterChange(a,b,c,d));
-
-            // load img2 and img1 part points
-            img1PartPoints.push_back(img2Points.at(rightEyeCompareOrder[i]).afterChange(a,b,c,d));
-            img2PartPoints.push_back(img2Points.at(rightEyeCompareOrder[i]));
-        }
-
-        // compare eyebrow
-        getAbcd(eyebrowComparePosCoor1, eyebrowComparePosCoor2);
-
-        // load img2 and img1 part points
-        img1PartPoints.push_back(img2Points.at(eyebrowComparePosCoor1).afterChange(a,b,c,d));
-        img2PartPoints.push_back(img2Points.at(eyebrowComparePosCoor1));
-        img1PartPoints.push_back(img2Points.at(eyebrowComparePosCoor2).afterChange(a,b,c,d));
-        img2PartPoints.push_back(img2Points.at(eyebrowComparePosCoor2));
-
-        eyebrowDistance = 0;
-        for(int i = 0; i < eyebrowCompareNum; i ++)
-        {
-            eyebrowDistance += img1Points.at(eyebrowCompareOrder[i]).getDistance(img2Points.at(eyebrowCompareOrder[i]).afterChange(a,b,c,d));
-
-            // load img2 and img1 part points
-            img1PartPoints.push_back(img2Points.at(eyebrowCompareOrder[i]).afterChange(a,b,c,d));
-            img2PartPoints.push_back(img2Points.at(eyebrowCompareOrder[i]));
-        }
+        //        for(int i = 0; i < mouthCompareNum; i ++)
+        //        {
+        //            // calcul distance of mouth
+        //            mouthDistance += img1Points.at(mouthCompareOrder[i]).getDistanceY(img2Points.at(mouthCompareOrder[i]).afterChange(a,b,c,d));
+        //            // load img2 and img1 part points
+        //            img1PartPoints.push_back(img2Points.at(mouthCompareOrder[i]).afterChange(a,b,c,d));
+        //            img2PartPoints.push_back(img2Points.at(mouthCompareOrder[i]));
+        //         }
 
         // compare left eye
         getAbcd(leftEyeComparePosCoor1, leftEyeComparePosCoor2);
 
         // load img2 and img1 part points
-        img1PartPoints.push_back(img2Points.at(leftEyeComparePosCoor1).afterChange(a,b,c,d));
-        img2PartPoints.push_back(img2Points.at(leftEyeComparePosCoor2));
-        img1PartPoints.push_back(img2Points.at(leftEyeComparePosCoor1).afterChange(a,b,c,d));
-        img2PartPoints.push_back(img2Points.at(leftEyeComparePosCoor2));
+        //        img1PartPoints.push_back(img2Points.at(leftEyeComparePosCoor1).afterChange(a,b,c,d));
+        //        img2PartPoints.push_back(img2Points.at(leftEyeComparePosCoor2));
+        //        img1PartPoints.push_back(img2Points.at(leftEyeComparePosCoor1).afterChange(a,b,c,d));
+        //        img2PartPoints.push_back(img2Points.at(leftEyeComparePosCoor2));
 
-        leftEyeDistance = 0;
-        for(int i = 0; i < leftEyeCompareNum; i ++)
-        {
-            leftEyeDistance += img1Points.at(leftEyeCompareOrder[i]).getDistance(img2Points.at(leftEyeCompareOrder[i]).afterChange(a,b,c,d));
+        histo1[1] = img1Points.at(leftEyeCompareOrder[0]).getDistanceY(img1Points.at(leftEyeCompareOrder[1]));
+        histo2[1] = img2Points.at(leftEyeCompareOrder[0]).getDistanceY(img2Points.at(leftEyeCompareOrder[1]));
 
-            // load img2 and img1 part points
-            img1PartPoints.push_back(img2Points.at(leftEyeCompareOrder[i]).afterChange(a,b,c,d));
-            img2PartPoints.push_back(img2Points.at(leftEyeCompareOrder[i]));
-        }
+        //        leftEyeDistance = 0;
+        //        for(int i = 0; i < leftEyeCompareNum; i ++)
+        //        {
+        //            leftEyeDistance += img1Points.at(leftEyeCompareOrder[i]).getDistanceY(img2Points.at(leftEyeCompareOrder[i]).afterChange(a,b,c,d));
 
-        distance = mouthDistance*mouthWeighting + rightEyeDistance*rightEyeWeighting + eyebrowDistance*eyeBrowWeighting + leftEyeDistance*leftEyeWeighting;
+        //            // load img2 and img1 part points
+        //            img1PartPoints.push_back(img2Points.at(leftEyeCompareOrder[i]).afterChange(a,b,c,d));
+        //            img2PartPoints.push_back(img2Points.at(leftEyeCompareOrder[i]));
+        //        }
 
-        double seuil = 100;
-        std::cout << "diatance : " << distance << std::endl;
-        return std::max((1 - distance/seuil), 0.00);
+        // compare rightEye
+        getAbcd(rightEyeComparePosCoor1, rightEyeComparePosCoor2);
+
+        // load img2 and img1 part points
+        //        img1PartPoints.push_back(img2Points.at(rightEyeComparePosCoor1).afterChange(a,b,c,d));
+        //        img2PartPoints.push_back(img2Points.at(rightEyeComparePosCoor1));
+        //        img1PartPoints.push_back(img2Points.at(rightEyeComparePosCoor2).afterChange(a,b,c,d));
+        //        img2PartPoints.push_back(img2Points.at(rightEyeComparePosCoor2));
+
+        histo1[2] = img1Points.at(rightEyeCompareOrder[0]).getDistanceY(img1Points.at(rightEyeCompareOrder[1]));
+        histo2[2] = img2Points.at(rightEyeCompareOrder[0]).getDistanceY(img2Points.at(rightEyeCompareOrder[1]));
+
+        //        rightEyeDistance = 0;
+        //        for(int i = 0; i < rightEyeCompareNum; i ++)
+        //        {
+        //            rightEyeDistance += img1Points.at(rightEyeCompareOrder[i]).getDistanceY(img2Points.at(rightEyeCompareOrder[i]).afterChange(a,b,c,d));
+        //            // load img2 and img1 part points
+        //            img1PartPoints.push_back(img2Points.at(rightEyeCompareOrder[i]).afterChange(a,b,c,d));
+        //            img2PartPoints.push_back(img2Points.at(rightEyeCompareOrder[i]));
+        //        }
+
+        // compare left eyebrow
+        getAbcd(leftEyebrowComparePosCoor1, leftEyebrowComparePosCoor2);
+
+        // load img2 and img1 part points
+        //        img1PartPoints.push_back(img2Points.at(leftEyebrowComparePosCoor1).afterChange(a,b,c,d));
+        //        img2PartPoints.push_back(img2Points.at(leftEyebrowComparePosCoor1));
+        //        img1PartPoints.push_back(img2Points.at(leftEyebrowComparePosCoor2).afterChange(a,b,c,d));
+        //        img2PartPoints.push_back(img2Points.at(leftEyebrowComparePosCoor2));
+
+        histo1[3] = img1Points.at(leftEyebrowCompareOrder[0]).getDistanceY(img1Points.at(leftEyebrowCompareOrder[1]));
+        histo2[3] = img2Points.at(leftEyebrowCompareOrder[0]).getDistanceY(img2Points.at(leftEyebrowCompareOrder[1]));
+
+        //        LeftEyebrowDistance = 0;
+        //        for(int i = 0; i < leftEyebrowCompareNum; i ++)
+        //        {
+        //            LeftEyebrowDistance += img1Points.at(leftEyebrowCompareOrder[i]).getDistanceY(img2Points.at(leftEyebrowCompareOrder[i]).afterChange(a,b,c,d));
+        //            // load img2 and img1 part points
+        //            img1PartPoints.push_back(img2Points.at(leftEyebrowCompareOrder[i]).afterChange(a,b,c,d));
+        //            img2PartPoints.push_back(img2Points.at(leftEyebrowCompareOrder[i]));
+        //        }
+
+        // compare right eyebrow
+        getAbcd(rightEyebrowComparePosCoor1, rightEyebrowComparePosCoor2);
+
+        // load img2 and img1 part points
+        //        img1PartPoints.push_back(img2Points.at(rightEyebrowComparePosCoor1).afterChange(a,b,c,d));
+        //        img2PartPoints.push_back(img2Points.at(rightEyebrowComparePosCoor1));
+        //        img1PartPoints.push_back(img2Points.at(rightEyebrowComparePosCoor2).afterChange(a,b,c,d));
+        //        img2PartPoints.push_back(img2Points.at(rightEyebrowComparePosCoor2));
+
+        histo1[4] = img1Points.at(rightEyebrowCompareOrder[0]).getDistanceY(img1Points.at(rightEyebrowCompareOrder[1]));
+        histo2[4] = img2Points.at(rightEyebrowCompareOrder[0]).getDistanceY(img2Points.at(rightEyebrowCompareOrder[1]));
+
+        //        rightEyebrowDistance = 0;
+        //        for(int i = 0; i < rightEyebrowCompareNum; i ++)
+        //        {
+        //            rightEyebrowDistance += img1Points.at(rightEyebrowCompareOrder[i]).getDistanceY(img2Points.at(rightEyebrowCompareOrder[i]).afterChange(a,b,c,d));
+        //            // load img2 and img1 part points
+        //            img1PartPoints.push_back(img2Points.at(rightEyebrowCompareOrder[i]).afterChange(a,b,c,d));
+        //            img2PartPoints.push_back(img2Points.at(rightEyebrowCompareOrder[i]));
+        //        }
+
+        //        distance = mouthDistance*mouthWeighting + rightEyeDistance*rightEyeWeighting + LeftEyebrowDistance*leftEyeBrowWeighting + leftEyeDistance*leftEyeWeighting;
+        distanceIntersection();
+        //        double seuil = 100;
+        std::cout << "similarity : " << similarity << std::endl;
+        return similarity;
     }
     else
     {
