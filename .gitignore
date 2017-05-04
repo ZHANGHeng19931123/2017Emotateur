@@ -79,3 +79,5 @@ CMakeLists.txt.user*
 _*
 
 # End of https://www.gitignore.io/api/qt,c++,opencv
+emotateur.pro
+release/moc_predefs.h
