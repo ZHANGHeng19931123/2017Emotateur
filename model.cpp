@@ -3,7 +3,7 @@
 Model::Model(ExpressionRecogniser *expressionRecogniser) : expressionRecogniser(expressionRecogniser)
 {
     imageNum = 1;
-    difficulity = 99;
+    difficulity = 90;
     loadNextImage();
     score = 0;
 }
@@ -57,6 +57,8 @@ cv::Mat Model::QImage2cvMat(QImage image)
         break;
     case QImage::Format_Indexed8:
         mat = cv::Mat(image.height(), image.width(), CV_8UC1, (void*)image.constBits(), image.bytesPerLine());
+        break;
+    default:
         break;
     }
     return mat;

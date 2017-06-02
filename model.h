@@ -8,7 +8,6 @@
 #include <QImage>
 #include <QDebug>
 
-#include <iostream>
 #include "opencv2/opencv.hpp"
 #include "stasm/stasm_lib.h"
 

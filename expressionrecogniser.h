@@ -4,14 +4,14 @@
 #include <vector>
 #include <string.h>
 #include <QDateTime>
-#include <iostream>
 #include <QImage>
 #include <QPixmap>
-#include <math.h>
+
 #include "opencv/highgui.h"
 #include "stasm/stasm_lib.h"
+#include <math.h>
 
-#include "point.h"
+#include "EmoPoint.h"
 
 using namespace std;
 
@@ -20,64 +20,41 @@ class ExpressionRecogniser
 public:
     ExpressionRecogniser(std::string dataPath);
     void setDataPath(std::string dataPath);
-    int* getContour(cv::Mat_<unsigned char> img);
     std::vector<EmoPoint> getFacePoints(cv::Mat_<unsigned char> img);
     std::vector<EmoPoint> getAllImg2FacePoints(){return img2Points;}
-    std::vector<EmoPoint> getPartImg1FacePoints(){std::cout << "img1 part points size: " << img1PartPoints.size() << std::endl;return img1PartPoints;}
-    std::vector<EmoPoint> getPartImg2FacePoints(){std::cout << "img2 part points size: " << img2PartPoints.size() << std::endl;return img2PartPoints;}
     double getSimilarity(cv::Mat_<unsigned char> img1, cv::Mat_<unsigned char> currentImg1);
     double getSimilarity(cv::Mat_<unsigned char> currentImg1);
     void loadImg1Points(cv::Mat_<unsigned char> img1);
 
 private:
+    Mat mask1 , mask2;
     std::string dataPath;
     int foundface;
     std::vector<EmoPoint> img1Points;
     std::vector<EmoPoint> img2Points;
-    std::vector<EmoPoint> img1PartPoints;
-    std::vector<EmoPoint> img2PartPoints;
 
-    const int mouthComparePosCoor1 = 59;
-    const int mouthComparePosCoor2 = 65;
-    const int mouthCompareOrder[2] = {62, 74};
-    const int mouthCompareNum = 2;
-//    double mouthDistance;
-    const double mouthWeighting = 0.5;
+    const int mouthCompareOrder[12] = {59, 60, 61, 62, 63, 64, 65, 72, 73, 74, 75, 76};
+    const int mouthCompareNum = 12;
+    void drawMouth();
 
-    const int leftEyeComparePosCoor1 = 30;
-    const int leftEyeComparePosCoor2 = 34;
-    const int leftEyeCompareOrder[2] = {32, 36};
-    const int leftEyeCompareNum = 2;
-//    double leftEyeDistance;
-    const double leftEyeWeighting = 0.17;
+    const int leftEyeCompareOrder[8] = {30, 31, 32, 33, 34, 35, 36, 37};
+    const int leftEyeCompareNum = 8;
+    void drawLeftEye();
 
-    const int rightEyeComparePosCoor1 = 40;
-    const int rightEyeComparePosCoor2 = 44;
-    const int rightEyeCompareOrder[2] = {42, 46};
-    const int rightEyeCompareNum = 2;
-//    double rightEyeDistance;
-    const double rightEyeWeighting = 0.17;
+    const int rightEyeCompareOrder[8] = {40, 41, 42, 43, 44, 45, 46, 47};
+    const int rightEyeCompareNum = 8;
+    void drawRightEye();
 
-    const int leftEyebrowComparePosCoor1 = 30;
-    const int leftEyebrowComparePosCoor2 = 34;
-    const int leftEyebrowCompareOrder[2] = {36, 17};
-    const int leftEyebrowCompareNum = 2;
-//    double LeftEyebrowDistance;
-    const double leftEyeBrowWeighting = 0.1;
+    const int leftEyebrowCompareOrder[6] = {16, 17, 18, 19, 20, 21};
+    const int leftEyebrowCompareNum = 6;
+    void drawLeftEyeBrow();
 
-    const int rightEyebrowComparePosCoor1 = 40;
-    const int rightEyebrowComparePosCoor2 = 44;
-    const int rightEyebrowCompareOrder[2] = {48, 24};
-    const int rightEyebrowCompareNum = 2;
-//    double rightEyebrowDistance;
-    const double rightEyeBrowWeighting = 0.1;
+    const int rightEyebrowCompareOrder[6] = {22, 23, 24, 25, 26, 27};
+    const int rightEyebrowCompareNum = 6;
+    void drawRightEyeBrow();
 
-    float a, b, c, d;
-    double similarity;
-    double histo1[5] = {0,0,0,0,0};
-    double histo2[5] = {0,0,0,0,0};
-    void getAbcd(int posCoor1, int posCoor2);
-    void distanceIntersection();
+    double a, b, c, d;
+    void getAcd(int posCoor1, int posCoor2, int posCoor3);
 };
 
 #endif // EXPRESSIONRECOGNISER_H

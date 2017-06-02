@@ -11,15 +11,14 @@
 #include <QMessageBox>
 #include <QPainter>
 
-#include <iostream>
-#include<cmath>
+#include <cmath>
 #include "opencv2/opencv.hpp"
 #include "stasm/stasm_lib.h"
 
 #include "expressionrecogniser.h"
 #include "model.h"
 #include "resultdialog.h"
-#include "point.h"
+#include "EmoPoint.h"
 
 
 using namespace cv;

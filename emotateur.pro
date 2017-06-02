@@ -8,6 +8,8 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+CONFIG += debug_and_release
+
 TARGET = emotateur
 CONFIG += console
 CONFIG -= app_bundle
@@ -40,15 +42,14 @@ SOURCES += main.cpp\
     ./stasm/MOD_1/facedet.cpp \
     ./stasm/MOD_1/initasm.cpp \
     expressionrecogniser.cpp \
-    point.cpp \
     model.cpp \
-    resultdialog.cpp
+    resultdialog.cpp \
+    EmoPoint.cpp
 
 HEADERS  += mainwindow.h \
     introdialog.h \
     gamedialog.h \
     expressionrecogniser.h \
-    point.h \
     ./stasm/stasm_lib.h \
     ./stasm/asm.h \
     ./stasm/atface.h \
@@ -386,7 +387,8 @@ HEADERS  += mainwindow.h \
     ./stasm/MOD_1/facedet.h \
     ./stasm/MOD_1/initasm.h \
     model.h \
-    resultdialog.h
+    resultdialog.h \
+    EmoPoint.h
 
 FORMS    += mainwindow.ui \
     introdialog.ui \
@@ -401,17 +403,8 @@ DISTFILES += \
     data/haarcascade_mcs_lefteye.xml \
     data/haarcascade_frontalface_alt2.xml
 
-##MACOS
-#INCLUDEPATH += /usr/local/include
-#LIBS += -L/usr/local/lib \
-# -lopencv_core \
-# -lopencv_highgui \
-# -lopencv_imgproc \
-# -lopencv_features2d \
-# -lopencv_calib3d\
-# -lopencv_objdetect
 
-INCLUDEPATH +=$$(OPENCV_DIR)\include
+INCLUDEPATH +=$$(OPENCV_DIR)\..\include
 
 LIBS += -L$$(OPENCV_DIR)\lib \
     -lopencv_core \
