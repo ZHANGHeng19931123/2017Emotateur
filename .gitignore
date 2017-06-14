@@ -85,3 +85,4 @@ release/*
 backup
 *.Debug
 *.Release
+*.o
